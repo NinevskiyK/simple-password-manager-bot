@@ -19,7 +19,7 @@ async def hello(message):
         print(f'caught {type(e)}: {e}')
 
 @bot.message_handler(commands=['set'])
-async def hello(message):
+async def set_info(message):
     try:
         if not await helpers.post_password(collection, message.from_user.id, message.text.split()[1], (message.text.split()[2], message.text.split()[3])):
             await bot.send_message(message.chat.id, "Something wrong. Maybe you've already added this login?")
@@ -34,7 +34,7 @@ async def hello(message):
 
 
 @bot.message_handler(commands=['del'])
-async def hello(message):
+async def del_info(message):
     try:
         if not await helpers.delete_password(collection, message.from_user.id, message.text.split()[1]):
             await bot.send_message(message.chat.id, "Something wrong. Maybe you don't have such login info?")
@@ -44,7 +44,7 @@ async def hello(message):
         print(f'caught {type(e)}: {e}')
 
 @bot.message_handler(commands=['get'])
-async def hello(message):
+async def get_info(message):
     try:
         info = await helpers.get_info(collection, message.from_user.id, message.text.split()[1])
         if info is None:
