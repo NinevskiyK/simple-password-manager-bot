@@ -1,0 +1,31 @@
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./db:/data/db 
+
+  bot:
+    build: ./bot
+    restart: always
+    volumes:
+      - ./bot:/bot
+    ports:
+      - 8000:8000
+    command: python bot.py
+    environment:
+      MONGO_USER: root
+      MONGO_PASSWORD: password
+      MONGO_NAME: mongo
+      TG_TOKEN: token
+    depends_on:
+      - mongodb
+
+    
+    
